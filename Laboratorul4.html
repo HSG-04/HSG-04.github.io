@@ -1,1 +1,129 @@
+1.
+
+a)
+AL=45h
+Sign flag=0
+Carry flag=0
+Overflow flag=0
+Zero flag=0
+
+b)
+AL=ABh
+Sign flag=0
+Carry flag=0
+Overflow flag=0
+Zero flag=0
+
+c)
+AL=8Ah
+Sign flag=1
+Carry flag=0
+Overflow flag=1
+Zero flag=0
+
+d)
+AL=15AAh
+BX=11B0h
+Carry flag=0
+Overflow flag=0
+Zero flag=0
+
+e)
+AX=2B54h
+BX=00h
+Carry flag=1
+Overflow flag=0
+Zero flag =0
+
+f)
+AX=856Ah
+BX=11B4h
+Carry flag=0
+Zero flag=0
+
+g)
+AL=54h
+BL=66h
+Carry flag=1
+Overflow flag=0
+Zero flag=0
+
+h)
+AX=35CCh
+BX=00ECh
+Carry flag=0
+Zero flag=0
+
+2.
+
+a)
+AX=5550h
+Carry flag=1
+Overflow flag=1
+
+b)
+AX=0555h
+
+c)
+AX=0555h
+
+d)
+AX=5555h
+Carry flag=1
+Overflow flag=1
+
+e)
+AX=5555h
+
+f)
+AX=2007h
+
+g)
+AX=555Ah
+Carry flag=1
+Overflow flag=1
+
+h)
+AX=B555h
+
+3.
+a) mov AX,0- AX=0, toate flagurile 0
+   xor AX,AX- AX=0, zero flag=1
+   Cele 2 instrucţiuni sunt identice: ambele depun în registrul AX valoarea 0, dar XOR este mai rapidă
+
+b) IDIV AX=FFFCh, BX=0002h, toate flagurile 0
+   SAR AX=FFFBh, BX=0002h, Carry flag=1, sign flag=1
+   IDIV furnizeaza FCh=-4, SAR furnizează FBh= -5 => SAR rotunjeşte numerele negative în jos iar IDIV le rotunjeşte în sus.
+
+4.
+a) 
+Sir DB 2,5,6,8,4,3,75,12
+MOV BX, OFFSET SIR ;BX este adresa de inceput a sirului
+MOV AL,03 ; AL=3
+XLAT ;AL=8
+SUB AH,AH ;AH=0, seteaza Zero Flag=1
+MOV SI,AX ;SI=AX=0008h
+MOV AL,[BX+SI] ;AL=0000h
+
+b) var db ’123456789ABCDEF’; Creaza o variabila de tip string
+xor AH, AH; AH=0, Zero Flag=1
+lea BX,var;BX setat la adresa de inceput a lui var
+mov AL,12; AL=12
+xlat; AL=44h
+
+c)sir db 1,2,3,4,5,6,7,8,9,10,11; Creeaza un sir
+mov SI,2; SI=2
+mov BX,3; BX=3
+lea AX, sir[SI][BX];  AX=000C
+
+5.
+mov AX,1234h ; AX=1234h
+mov BX, 5678h ; BX=5678h
+push AX ; SP=0FFFCh (SS:SP)=1234h
+push BX ; SP=0FFFAh (SS:SP)=5678h
+stiva va incepe de la dresa fizica 16FFDh pe octet si va arata  astfel: 12, 34, 56, 78
+0700:FFFAh = 78h
+0700:FFFBh = 56h
+0700:FFFCh = 34h
+0700:FFFDh = 12h
 

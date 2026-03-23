@@ -1,129 +1,260 @@
-1.
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorul 4</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 24px;
+      background: #f5f6fa;
+      color: #222;
+    }
 
-a)
-AL=45h
-Sign flag=0
-Carry flag=0
-Overflow flag=0
-Zero flag=0
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    }
 
-b)
-AL=ABh
-Sign flag=0
-Carry flag=0
-Overflow flag=0
-Zero flag=0
+    h1, h2, h3 {
+      color: #1a1a1a;
+    }
 
-c)
-AL=8Ah
-Sign flag=1
-Carry flag=0
-Overflow flag=1
-Zero flag=0
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-d)
-AL=15AAh
-BX=11B0h
-Carry flag=0
-Overflow flag=0
-Zero flag=0
+    .exercise {
+      margin-bottom: 28px;
+      padding: 18px;
+      background: #fafafa;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+    }
 
-e)
-AX=2B54h
-BX=00h
-Carry flag=1
-Overflow flag=0
-Zero flag =0
+    .subpoint {
+      margin-bottom: 14px;
+    }
 
-f)
-AX=856Ah
-BX=11B4h
-Carry flag=0
-Zero flag=0
+    pre {
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-x: auto;
+    }
 
-g)
-AL=54h
-BL=66h
-Carry flag=1
-Overflow flag=0
-Zero flag=0
+    code {
+      background: #eeeeee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Laboratorul 4</h1>
 
-h)
-AX=35CCh
-BX=00ECh
-Carry flag=0
-Zero flag=0
+    <div class="exercise">
+      <h2>1.</h2>
 
-2.
+      <div class="subpoint">
+        <h3>a)</h3>
+        <pre>AL = 45h
+Sign flag = 0
+Carry flag = 0
+Overflow flag = 0
+Zero flag = 0</pre>
+      </div>
 
-a)
-AX=5550h
-Carry flag=1
-Overflow flag=1
+      <div class="subpoint">
+        <h3>b)</h3>
+        <pre>AL = ABh
+Sign flag = 0
+Carry flag = 0
+Overflow flag = 0
+Zero flag = 0</pre>
+      </div>
 
-b)
-AX=0555h
+      <div class="subpoint">
+        <h3>c)</h3>
+        <pre>AL = 8Ah
+Sign flag = 1
+Carry flag = 0
+Overflow flag = 1
+Zero flag = 0</pre>
+      </div>
 
-c)
-AX=0555h
+      <div class="subpoint">
+        <h3>d)</h3>
+        <pre>AL = 15AAh
+BX = 11B0h
+Carry flag = 0
+Overflow flag = 0
+Zero flag = 0</pre>
+      </div>
 
-d)
-AX=5555h
-Carry flag=1
-Overflow flag=1
+      <div class="subpoint">
+        <h3>e)</h3>
+        <pre>AX = 2B54h
+BX = 00h
+Carry flag = 1
+Overflow flag = 0
+Zero flag = 0</pre>
+      </div>
 
-e)
-AX=5555h
+      <div class="subpoint">
+        <h3>f)</h3>
+        <pre>AX = 856Ah
+BX = 11B4h
+Carry flag = 0
+Zero flag = 0</pre>
+      </div>
 
-f)
-AX=2007h
+      <div class="subpoint">
+        <h3>g)</h3>
+        <pre>AL = 54h
+BL = 66h
+Carry flag = 1
+Overflow flag = 0
+Zero flag = 0</pre>
+      </div>
 
-g)
-AX=555Ah
-Carry flag=1
-Overflow flag=1
+      <div class="subpoint">
+        <h3>h)</h3>
+        <pre>AX = 35CCh
+BX = 00ECh
+Carry flag = 0
+Zero flag = 0</pre>
+      </div>
+    </div>
 
-h)
-AX=B555h
+    <div class="exercise">
+      <h2>2.</h2>
 
-3.
-a) mov AX,0- AX=0, toate flagurile 0
-   xor AX,AX- AX=0, zero flag=1
-   Cele 2 instrucţiuni sunt identice: ambele depun în registrul AX valoarea 0, dar XOR este mai rapidă
+      <div class="subpoint">
+        <h3>a)</h3>
+        <pre>AX = 5550h
+Carry flag = 1
+Overflow flag = 1</pre>
+      </div>
 
-b) IDIV AX=FFFCh, BX=0002h, toate flagurile 0
-   SAR AX=FFFBh, BX=0002h, Carry flag=1, sign flag=1
-   IDIV furnizeaza FCh=-4, SAR furnizează FBh= -5 => SAR rotunjeşte numerele negative în jos iar IDIV le rotunjeşte în sus.
+      <div class="subpoint">
+        <h3>b)</h3>
+        <pre>AX = 0555h</pre>
+      </div>
 
-4.
-a) 
-Sir DB 2,5,6,8,4,3,75,12
-MOV BX, OFFSET SIR ;BX este adresa de inceput a sirului
-MOV AL,03 ; AL=3
-XLAT ;AL=8
-SUB AH,AH ;AH=0, seteaza Zero Flag=1
-MOV SI,AX ;SI=AX=0008h
-MOV AL,[BX+SI] ;AL=0000h
+      <div class="subpoint">
+        <h3>c)</h3>
+        <pre>AX = 0555h</pre>
+      </div>
 
-b) var db ’123456789ABCDEF’; Creaza o variabila de tip string
-xor AH, AH; AH=0, Zero Flag=1
-lea BX,var;BX setat la adresa de inceput a lui var
-mov AL,12; AL=12
-xlat; AL=44h
+      <div class="subpoint">
+        <h3>d)</h3>
+        <pre>AX = 5555h
+Carry flag = 1
+Overflow flag = 1</pre>
+      </div>
 
-c)sir db 1,2,3,4,5,6,7,8,9,10,11; Creeaza un sir
-mov SI,2; SI=2
-mov BX,3; BX=3
-lea AX, sir[SI][BX];  AX=000C
+      <div class="subpoint">
+        <h3>e)</h3>
+        <pre>AX = 5555h</pre>
+      </div>
 
-5.
-mov AX,1234h ; AX=1234h
-mov BX, 5678h ; BX=5678h
-push AX ; SP=0FFFCh (SS:SP)=1234h
-push BX ; SP=0FFFAh (SS:SP)=5678h
-stiva va incepe de la dresa fizica 16FFDh pe octet si va arata  astfel: 12, 34, 56, 78
+      <div class="subpoint">
+        <h3>f)</h3>
+        <pre>AX = 2007h</pre>
+      </div>
+
+      <div class="subpoint">
+        <h3>g)</h3>
+        <pre>AX = 555Ah
+Carry flag = 1
+Overflow flag = 1</pre>
+      </div>
+
+      <div class="subpoint">
+        <h3>h)</h3>
+        <pre>AX = B555h</pre>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <h2>3.</h2>
+
+      <div class="subpoint">
+        <h3>a)</h3>
+        <pre>mov AX,0        → AX = 0, toate flagurile 0
+xor AX,AX       → AX = 0, Zero flag = 1
+
+Cele 2 instrucțiuni sunt identice: ambele depun în registrul AX valoarea 0,
+dar XOR este mai rapidă.</pre>
+      </div>
+
+      <div class="subpoint">
+        <h3>b)</h3>
+        <pre>IDIV → AX = FFFCh, BX = 0002h, toate flagurile 0
+SAR  → AX = FFFBh, BX = 0002h, Carry flag = 1, Sign flag = 1
+
+IDIV furnizează FCh = -4, SAR furnizează FBh = -5.
+SAR rotunjește numerele negative în jos, iar IDIV le rotunjește în sus.</pre>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <h2>4.</h2>
+
+      <div class="subpoint">
+        <h3>a)</h3>
+        <pre>Sir DB 2,5,6,8,4,3,75,12
+MOV BX, OFFSET SIR    ; BX este adresa de început a șirului
+MOV AL, 03            ; AL = 3
+XLAT                  ; AL = 8
+SUB AH, AH            ; AH = 0, setează Zero Flag = 1
+MOV SI, AX            ; SI = AX = 0008h
+MOV AL, [BX+SI]       ; AL = 0000h</pre>
+      </div>
+
+      <div class="subpoint">
+        <h3>b)</h3>
+        <pre>var db '123456789ABCDEF' ; creează o variabilă de tip string
+xor AH, AH              ; AH = 0, Zero Flag = 1
+lea BX, var             ; BX setat la adresa de început a lui var
+mov AL, 12              ; AL = 12
+xlat                    ; AL = 44h</pre>
+      </div>
+
+      <div class="subpoint">
+        <h3>c)</h3>
+        <pre>sir db 1,2,3,4,5,6,7,8,9,10,11 ; creează un șir
+mov SI, 2                       ; SI = 2
+mov BX, 3                       ; BX = 3
+lea AX, sir[SI][BX]             ; AX = 000Ch</pre>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <h2>5.</h2>
+      <pre>mov AX,1234h     ; AX = 1234h
+mov BX,5678h     ; BX = 5678h
+push AX          ; SP = 0FFFCh, (SS:SP) = 1234h
+push BX          ; SP = 0FFFAh, (SS:SP) = 5678h
+
+Stiva va începe de la adresa fizică 16FFDh pe octet și va arăta astfel:
 0700:FFFAh = 78h
 0700:FFFBh = 56h
 0700:FFFCh = 34h
-0700:FFFDh = 12h
-
+0700:FFFDh = 12h</pre>
+    </div>
+  </div>
+</body>
+</html>

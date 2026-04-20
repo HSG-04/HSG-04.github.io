@@ -1,0 +1,84 @@
+const express = require('express');
+const bcrypt = require('bcrypt'); // Pentru hash-uirea parolelor
+const db = require('../db'); // Acces la "baza de date" de utilizatori
+const router = express.Router();
+// GET /register - Afișează formularul de înregistrare
+router.get('/register', (req, res) => {
+    res.render('register', { title: 'Înregistrare', message: req.session.message });
+    delete req.session.message; // Curăță mesajul după afișare
+});
+// POST /register - Procesează înregistrarea unui utilizator nou
+router.post('/register', async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        req.session.message = 'Câmpurile email și parolă sunt obligatorii.';
+        return res.redirect('/register');
+    }
+    // Verifică dacă există deja un utilizator cu acest email
+    if (db.users.findByEmail(email)) {
+        req.session.message = 'Un utilizator cu acest email există deja.';
+        return res.redirect('/register');
+    }
+    try {
+        // Hash-uiește parola înainte de a o stoca
+        const hashedPassword = await bcrypt.hash(password, 10); // 10 este saltRounds
+        const newUser = db.users.add({
+            email,
+            password: hashedPassword // Stocăm parola hash-uită
+        });
+        // Autentifică automat noul utilizator
+        req.session.user = { id: newUser.id, email: newUser.email };
+        req.session.views = 0; // Inițializează contorul de vizite pentru sesiune
+        res.redirect('/shop'); // Redirecționează la zona protejată
+    } catch (error) {
+        console.error('Eroare la înregistrare:', error);
+        req.session.message = 'A apărut o eroare la înregistrare. Te rugăm să încerci din nou.';
+        res.redirect('/register');
+    }
+});
+// GET /login - Afișează formularul de login
+router.get('/login', (req, res) => {
+    res.render('login', { title: 'Login', message: req.session.message });
+    delete req.session.message; // Curăță mesajul după afișare
+});
+// POST /login - Procesează autentificarea
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        req.session.message = 'Câmpurile email și parolă sunt obligatorii.';
+        return res.redirect('/login');
+    }
+    const user = db.users.findByEmail(email);
+    if (!user) {
+        req.session.message = 'Email sau parolă incorecte.';
+        return res.redirect('/login');
+    }
+    try {
+        // Compară parola introdusă cu parola hash-uită stocată
+        const match = await bcrypt.compare(password, user.password);
+        if (match) {
+            req.session.user = { id: user.id, email: user.email };
+            req.session.views = 0; // Inițializează contorul de vizite
+            res.redirect('/shop'); // Redirecționează la zona protejată
+        } else {
+            req.session.message = 'Email sau parolă incorecte.';
+            res.redirect('/login');
+        }
+    } catch (error) {
+        console.error('Eroare la login:', error);
+        req.session.message = 'A apărut o eroare la autentificare. Te rugăm să încerci din nou.';
+        res.redirect('/login');
+    }
+});
+// GET /logout - Distruge sesiunea și deloghează utilizatorul
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error('Eroare la delogare:', err);
+            return res.redirect('/'); // În caz de eroare, tot redirectează
+        }
+        res.clearCookie('connect.sid'); // Șterge cookie-ul de sesiune
+        res.redirect('/'); // Redirecționează la pagina principală
+    });
+});
+module.exports = router;
